@@ -1,0 +1,19 @@
+{
+  "name": "image-meta-fixer",
+  "version": "1.0.0",
+  "description": " Replaces file `created` and `content created` metadata with timestamp from exif ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \\\"No tests\\\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/georgegillams/image-meta-fixer.git"
+  },
+  "author": "George Gillams",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/georgegillams/image-meta-fixer/issues"
+  },
+  "homepage": "https://github.com/georgegillams/image-meta-fixer#readme"
+}
