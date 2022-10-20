@@ -4,6 +4,7 @@
   "description": " Replaces file `created` and `content created` metadata with timestamp from exif ",
   "main": "index.js",
   "scripts": {
+    "action": "babel-node index.js",
     "test": "echo \\\"No tests\\\""
   },
   "repository": {
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/georgegillams/image-meta-fixer/issues"
   },
-  "homepage": "https://github.com/georgegillams/image-meta-fixer#readme"
+  "homepage": "https://github.com/georgegillams/image-meta-fixer#readme",
+  "dependencies": {
+    "@babel/core": "^7.19.6",
+    "@babel/node": "^7.19.1"
+  }
 }
