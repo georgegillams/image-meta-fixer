@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const { execSync } = require("child_process");
+const { dir } = require("console");
 const fs = require("fs");
 const path = require("path");
 
@@ -37,11 +38,27 @@ const outputDirectory = path.resolve(outputDirectoryArg);
 console.log(`Looking for media files in`, inputDirectory);
 console.log(`Relocating them to`, outputDirectory);
 
-const imagesToFix = fs
-  .readdirSync(inputDirectory)
-  .filter((i) =>
-    acceptedFileExtensions.some((a) => i.toLowerCase().endsWith(a))
-  );
+const readdirSyncRecursive = (dirPath, originalPath, arrayOfFiles = []) => {
+  let result = [...arrayOfFiles];
+
+  files = fs.readdirSync(dirPath);
+
+  files.forEach(function (file) {
+    const newPath = path.join(dirPath, file);
+    if (fs.statSync(newPath).isDirectory()) {
+      result = readdirSyncRecursive(newPath, originalPath || dirPath, result);
+    } else {
+      result.push(newPath.split(originalPath || dirPath).pop());
+    }
+  });
+
+  return result;
+};
+
+const imagesToFix = readdirSyncRecursive(inputDirectory).filter((i) =>
+  acceptedFileExtensions.some((a) => i.toLowerCase().endsWith(a))
+);
+console.log(`images`, imagesToFix);
 console.log(`${imagesToFix.length} files found`);
 
 for (let image of imagesToFix) {
@@ -77,7 +94,7 @@ for (let image of imagesToFix) {
     const [year, month] = actualCreateDate.split("-");
     moveDirectory = path.join(outputDirectory, year, month);
   }
-  const moveFileLocation = path.join(moveDirectory, image);
+  const moveFileLocation = path.join(moveDirectory, image.split("/").pop());
   const destinationExists = fs.existsSync(moveFileLocation);
   if (destinationExists) {
     console.error(`${image}: destination file exists`);
