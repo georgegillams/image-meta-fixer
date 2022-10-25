@@ -19,7 +19,18 @@ const acceptedFileExtensions = [
   ".png",
   ".gif",
   ".heic",
-  ".png",
+  ".dng",
+  ".cr2",
+  ".nef",
+  ".orf",
+  ".arw",
+  ".rw2",
+  ".raf",
+  ".srw",
+  ".tif",
+  ".tiff",
+  ".bmp",
+  ".webp",
 ];
 
 const inputDirectoryArg = process.argv[2];
