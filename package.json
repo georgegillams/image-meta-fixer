@@ -4,7 +4,8 @@
   "description": " Replaces file `created` and `content created` metadata with timestamp from exif ",
   "main": "index.js",
   "scripts": {
-    "action": "babel-node index.js",
+    "action": "babel-node src/fix-data.js",
+    "set": "babel-node src/set-data.js",
     "test": "echo \\\"No tests\\\""
   },
   "repository": {
