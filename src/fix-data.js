@@ -76,13 +76,16 @@ for (let image of imagesToFix) {
       const [year, month] = actualCreateDate.split("-");
       moveDirectory = path.join(outputDirectory, year, month);
     }
-    const moveFileLocation = path.join(moveDirectory, image.split("/").pop());
-    const destinationExists = fs.existsSync(moveFileLocation);
-    if (destinationExists) {
-      console.error(`${image}: destination file exists`);
-    }
+    let moveFileLocation = path.join(moveDirectory, image.split("/").pop());
+    if (fullFilePath !== moveFileLocation) {
+      // Ensure destination file has unique name so
+      // we don't overwrite anything
+      while (fs.existsSync(moveFileLocation)) {
+        const ext = path.extname(moveFileLocation);
+        const base = path.basename(moveFileLocation, ext);
+        moveFileLocation = path.join(moveDirectory, `${base}-1${ext}`);
+      }
 
-    if (fullFilePath !== moveFileLocation && !destinationExists) {
       execSync(`mkdir -p "${moveDirectory}"`);
       execSync(`mv "${fullFilePath}" "${moveFileLocation}"`);
     }
