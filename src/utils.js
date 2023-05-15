@@ -2,11 +2,18 @@ const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
-const getExifDate = (path, property) =>
-  execSync(`exiftool -${property} -d "%Y-%m-%d" "${path}"`)
+const getExifDate = (path, property) => {
+  const exifDate = execSync(`exiftool -${property} -d "%Y-%m-%d" "${path}"`)
     .toString()
     .split(":")[1]
     ?.trim();
+
+  if (exifDate === "0000") {
+    return null;
+  }
+
+  return exifDate;
+};
 
 const getFileNameDate = (path) => {
   const fileName = path.split("/").pop();
